@@ -1,4 +1,5 @@
 import ops
+import iopc
 
 def MAIN_ENV(args):
     pkg_path = args["pkg_path"]
@@ -7,12 +8,9 @@ def MAIN_ENV(args):
     busybox_def_config = pkg_path + "/default.config"
     busybox_build_dir = output_dir + "/busybox-1.25.1"
 
-    env = ops.setEnv("busybox_tarball", busybox_tarball)
-    ops.exportEnv(env)
-    env = ops.setEnv("busybox_build_dir", busybox_build_dir)
-    ops.exportEnv(env)
-    env = ops.setEnv("busybox_def_config", busybox_def_config)
-    ops.exportEnv(env)
+    ops.exportEnv(ops.setEnv("busybox_tarball", busybox_tarball))
+    ops.exportEnv(ops.setEnv("busybox_build_dir", busybox_build_dir))
+    ops.exportEnv(ops.setEnv("busybox_def_config", busybox_def_config))
     return False
 
 def MAIN_EXTRACT(args):
@@ -29,12 +27,15 @@ def MAIN_CONFIGURE(args):
 
 def MAIN_BUILD(args):
     busybox_build_dir = ops.getEnv("busybox_build_dir")
-    CMD = ["make"]
-    res = ops.execCmd(CMD, busybox_build_dir, False, None)
+    iopc.make(busybox_build_dir)
     return False
 
 def MAIN_INSTALL(args):
     output_dir = args["output_path"]
+    busybox_build_dir = ops.getEnv("busybox_build_dir")
+    extra_conf = []
+    extra_conf.append("CONFIG_PREFIX=" + iopc.getBinPkgPath(args["pkg_name"]))
+    iopc.make_install(busybox_build_dir, extra_conf)
     return False
 
 def MAIN_CLEAN_BUILD(args):
