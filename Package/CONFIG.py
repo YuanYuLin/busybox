@@ -61,7 +61,11 @@ def MAIN_BUILD(args):
     set_global(args)
 
     print busybox_build_dir
-    iopc.make(busybox_build_dir)
+    extra_conf = None
+    #extra_conf = []
+    #extra_conf.append("ARCH=" + ops.getEnv("ARCH"))
+    #extra_conf.append("CROSS_COMPILE=" + ops.getEnv("CROSS_COMPILE"))
+    iopc.make(busybox_build_dir, extra_conf)
     return False
 
 def MAIN_INSTALL(args):
