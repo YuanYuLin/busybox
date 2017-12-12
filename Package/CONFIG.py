@@ -18,12 +18,15 @@ def set_global(args):
     global src_busybox_udhcpc_script
     global tmp_busybox_udhcpc_script
 
+    pkg_args = args["pkg_args"]
+    def_cfg_version = "default_" + pkg_args["config"] + ".config"
+    BUSYBOX_VERSION = pkg_args["version"]
     pkg_path = args["pkg_path"]
     output_dir = args["output_path"]
-    busybox_tarball = pkg_path + "/busybox-1.25.1.tar.bz2"
-    busybox_def_config = pkg_path + "/default.config"
-    busybox_build_dir = output_dir + "/busybox-1.25.1"
-    src_busybox_udhcpc_script = busybox_build_dir + "/examples/udhcp/simple.script"
+    busybox_tarball = ops.path_join(pkg_path, BUSYBOX_VERSION) + ".tar.bz2"
+    busybox_def_config = ops.path_join(pkg_path, def_cfg_version)
+    busybox_build_dir = ops.path_join(output_dir, BUSYBOX_VERSION)
+    src_busybox_udhcpc_script = ops.path_join(busybox_build_dir, "examples/udhcp/simple.script")
     tmp_busybox_udhcpc_script = ops.path_join(output_dir, "default.script")
     #dst_busybox_udhcpc_script_dir = iopc.getBinPkgPath(args["pkg_name"]) + "/usr/share/udhcpc/"
 
