@@ -8,6 +8,7 @@ busybox_def_config = ""
 busybox_build_dir = ""
 src_busybox_udhcpc_script = ""
 tmp_busybox_udhcpc_script = ""
+jobs_count = ""
 
 def set_global(args):
     global pkg_path
@@ -17,18 +18,22 @@ def set_global(args):
     global busybox_build_dir
     global src_busybox_udhcpc_script
     global tmp_busybox_udhcpc_script
+    global jobs_count
 
     pkg_args = args["pkg_args"]
     def_cfg_version = "default_" + pkg_args["config"] + ".config"
     BUSYBOX_VERSION = pkg_args["version"]
     pkg_path = args["pkg_path"]
     output_dir = args["output_path"]
+    jobs_count = ops.getEnv("BUILD_JOBS_COUNT")
     busybox_tarball = ops.path_join(pkg_path, BUSYBOX_VERSION) + ".tar.bz2"
     busybox_def_config = ops.path_join(pkg_path, def_cfg_version)
     busybox_build_dir = ops.path_join(output_dir, BUSYBOX_VERSION)
     src_busybox_udhcpc_script = ops.path_join(busybox_build_dir, "examples/udhcp/simple.script")
     tmp_busybox_udhcpc_script = ops.path_join(output_dir, "default.script")
     #dst_busybox_udhcpc_script_dir = iopc.getBinPkgPath(args["pkg_name"]) + "/usr/share/udhcpc/"
+    if jobs_count == "" :
+        jobs_count = "2"
 
 def MAIN_ENV(args):
     set_global(args)
@@ -64,7 +69,8 @@ def MAIN_BUILD(args):
     set_global(args)
 
     print busybox_build_dir
-    extra_conf = None
+    extra_conf = []
+    extra_conf.append("-j" + jobs_count)
     #extra_conf = []
     #extra_conf.append("ARCH=" + ops.getEnv("ARCH"))
     #extra_conf.append("CROSS_COMPILE=" + ops.getEnv("CROSS_COMPILE"))
