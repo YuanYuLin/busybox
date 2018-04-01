@@ -1,0 +1,25 @@
+::sysinit:/bin/mount -t proc proc /proc
+::sysinit:/bin/mount -t tmpfs tmpfs /tmp
+::sysinit:/bin/mkdir /tmp/var
+::sysinit:/bin/mkdir /tmp/hdd
+::sysinit:/bin/touch /etc/resolv.conf
+::sysinit:/bin/mount -t devtmpfs devtmpfs /dev
+::sysinit:/bin/mount -t sysfs sysfs /sys
+::sysinit:/bin/mount -t cgroup cgroup /sys/fs/cgroup
+::sysinit:/bin/mkdir /dev/mqueue
+::sysinit:/bin/mount -t mqueue mqueue /dev/mqueue
+::sysinit:/bin/mkdir /dev/pts
+::sysinit:/bin/mount -t devpts devpts /dev/pts
+::sysinit:/bin/mkdir /var/run
+::sysinit:/bin/mkdir /var/log
+::sysinit:/bin/mkdir -p /var/spool/cron/crontabs
+
+::sysinit:/sbin/ifconfig lo up
+
+::respawn:/sbin/klogd -n
+::respawn:/sbin/syslogd -n
+::respawn:/usr/sbin/crond -f
+::respawn:/usr/bin/iopclauncher
+
+::askfirst:-/bin/sh
+
