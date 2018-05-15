@@ -20,6 +20,7 @@
 ::respawn:/sbin/syslogd -n
 ::respawn:/usr/sbin/crond -f
 ::respawn:/usr/bin/iopclauncher
+#::respawn:/bin/weston_init.sh
 
 ::askfirst:-/bin/sh
 
