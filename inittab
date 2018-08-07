@@ -2,6 +2,10 @@
 ::sysinit:/bin/mount -t tmpfs tmpfs /tmp
 ::sysinit:/bin/mkdir /tmp/var
 ::sysinit:/bin/mkdir /tmp/hdd
+::sysinit:/bin/mkdir /tmp/lxc
+::sysinit:/bin/mkdir /tmp/lxc/lib
+::sysinit:/bin/mkdir /tmp/lxc/lib/lxc
+::sysinit:/bin/mkdir /tmp/lxc/lib/lxc/rootfs
 ::sysinit:/bin/touch /etc/resolv.conf
 ::sysinit:/bin/mount -t devtmpfs devtmpfs /dev
 ::sysinit:/bin/mount -t sysfs sysfs /sys
@@ -12,6 +16,8 @@
 ::sysinit:/bin/mount -t devpts devpts /dev/pts
 ::sysinit:/bin/mkdir /var/run
 ::sysinit:/bin/mkdir /var/log
+::sysinit:/bin/mkdir /var/lib
+::sysinit:/bin/mkdir /var/lib/lxc
 ::sysinit:/bin/mkdir -p /var/spool/cron/crontabs
 
 ::sysinit:/sbin/ifconfig lo up
