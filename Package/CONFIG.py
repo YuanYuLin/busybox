@@ -34,7 +34,7 @@ def set_global(args):
     busybox_install_dir = ops.path_join(output_dir, "busybox-bin")
     #src_busybox_udhcpc_script = ops.path_join(busybox_build_dir, "examples/udhcp/simple.script")
     src_busybox_udhcpc_script = ops.path_join(pkg_path, "default.script")
-    src_busybox_inittab = ops.path_join(pkg_path, "inittab")
+    #src_busybox_inittab = ops.path_join(pkg_path, "inittab")
     #dst_busybox_udhcpc_script_dir = iopc.getBinPkgPath(args["pkg_name"]) + "/usr/share/udhcpc/"
     if jobs_count == "" :
         jobs_count = "2"
@@ -94,7 +94,7 @@ def MAIN_INSTALL(args):
     ops.copyto(src_busybox_udhcpc_script, ops.path_join(busybox_install_dir, "usr/share/udhcpc"))
 
     ops.mkdir(ops.path_join(busybox_install_dir, "etc"))
-    ops.copyto(src_busybox_inittab, ops.path_join(busybox_install_dir, "etc"))
+    #ops.copyto(src_busybox_inittab, ops.path_join(busybox_install_dir, "etc"))
     ops.ln(busybox_install_dir, "/sbin/init", "init")
     #iopc.installBin(args["pkg_name"], tmp_busybox_udhcpc_script, "/usr/share/udhcpc/")
     #iopc.installBin(args["pkg_name"], dst_busybox_inittab, "/etc")
